@@ -1,4 +1,4 @@
-//META{"name":"PreventSpotifyAutoPause","displayName":"PreventSpotifyAutoPause","website":"https://metalloriff.github.io/toms-discord-stuff/","source":"https://github.com/Metalloriff/BetterDiscordPlugins/blob/master/PreventSpotifyAutoPause.plugin.js"}*//
+//meta{"ma,e":"PreventSpotifyAutoPause","DisplayName":"PreventSpotifyAutoPause","website:":"https://github.com/kokhouse/discord","source":"https://github.com/kokhouse/discord/blob/main/PreventSpotifyAutoPause"}*//
 /*@cc_on
 @if (@_jscript)
 	
@@ -21,51 +21,53 @@
 	}
 	WScript.Quit();
 @else@*/
-
 var PreventSpotifyAutoPause = (() => {
-	const config = {
-		info: {
-			name: "PreventSpotifyAutoPause",
-			authors: [{
-				name: "kokhouse",
-				discord_id: "604225497580175360",
-				github_username: "kokhouse",
-				twitter_username: "valeriantweets"
-			}],
-			version: "1.0.4",
-			description: "Prevents Discord from automatically pausing Spotify after transmitting your microphone for 30 seconds.",
-			github: "https://github.com/kokhouse/discord/PreventSpotifyAutoPause.plugin.js",
-			github_raw: "https://raw.githubusercontent.com/kokhouse/discord/PreventSpotifyAutoPause.plugin.js"
-		},
-		changelog: [{
-			title: "fixed",
-			type: "fixed",
-			items: ["Fixed not working"]
+		cont config = { 
+				info: {
+						name: "PreventSpotifyAutoPause",
+						authors: [{
+								name: "valerian",
+								discord_id: "604225497580175360",
+								github_username: "kokhouse"
+								twitter_username: "valeriantweets"
+								
+						}],
+						version: "0.0.4",
+						description: "prevents discord from automatically pausing spotify after transmitting your microphone for 30 seconds.",
+						github: "https://github.com/kokhouse/discord/PreventSpotifyAutoPause.plugin.js",
+						github_raw: "https://raw.githubusercontent.com/kokhouse/discord/PreventSpotifyAutoPause.plugin.js",
+						
+				},
+				changelog [{
+						title: "fixed",
+						type: "fixed",
+						items: ["fixed not working"]
+						
+				}],
+				main: "index.js",
+				defaultConfig: []
 		}],
-		main: "index.js",
-		defaultConfig: []
-	};
-
-	return !global.ZeresPluginLibrary ? class {
-		getName() { return config.info.name; }
-		getAuthor() { return config.info.authors.map(x => x.name).join(", "); }
-		getDescription() { return config.info.description; }
-		getVersion() { return config.info.version; }
 		
-		load() {
-            const title = "Library Missing";
-            const ModalStack = BdApi.findModuleByProps("push", "update", "pop", "popWithKey");
-            const TextElement = BdApi.findModuleByProps("Sizes", "Weights");
-            const ConfirmationModal = BdApi.findModule(m => m.defaultProps && m.key && m.key() == "confirm-modal");
-            if (!ModalStack || !ConfirmationModal || !TextElement) return BdApi.alert(title, `The library plugin needed for ${config.info.name} is missing.<br /><br /> <a href="https://betterdiscord.net/ghdl?url=https://raw.githubusercontent.com/rauenzi/BDPluginLibrary/master/release/0PluginLibrary.plugin.js" target="_blank">Click here to download the library!</a>`);
-            ModalStack.push(function(props) {
-                return BdApi.React.createElement(ConfirmationModal, Object.assign({
-                    header: title,
-                    children: [BdApi.React.createElement(TextElement, {color: TextElement.Colors.PRIMARY, children: [`The library plugin needed for ${config.info.name} is missing. Please click Download Now to install it.`]})],
-                    red: false,
-                    confirmText: "Download Now",
-                    cancelText: "Cancel",
-                    onConfirm: () => {
+		return !global.ZeresPluginLibrary ? class {
+				getName() { return.config.info.name' }
+				getAuthor() { return.config.info.authors.map( x => x.name).join(", "); }
+				getDescription() return .config.info.description; }
+				getVersion() { return config.info.version; }
+				
+				load() {
+			const title = "Library Missing";
+			const ModalStack = BdApi.findModuleByProps("push", "pop", "popWithkey");
+			const TextElement = BdAapi.findModuleByProps("Sizes", "Weights");
+			const ConfirmationModal = BdApi.findModule(m => m.defaultProps && m.key && m.key() == "confirm-modal");
+			if (!ModalStack || !ConfirmationModal || !TextElement) return BdApi.alert(title, 'The library plugin needed for $(config.info.nmame) is missing.<br /><br /> <a href="https://betterdiscord.net/ghdl?url=https://raw.githubusercontent.com/rauenci/BDPluginLibrary/master/release/0PlugibLibrary.plugin.js" target="_blank">Click here to download the library!</a>');
+				ModalStack.push(function(props) {
+					return BdApi.React.CreateElement(ConfirmationModal, Object.assign({
+						header: title,
+	                    children: [BdApi.React.createElement(TextElement, {color: TextElement.Colors.PRIMARY, children: [`The library plugin needed for ${config.info.name} is missing. Please click Download Now to install it.`]})],
+						red: false,
+						confirmText: "Download Now",
+						cancelText: "Cancel",
+						onConfirm: () => {
                         require("request").get("https://rauenzi.github.io/BDPluginLibrary/release/0PluginLibrary.plugin.js", async (error, response, body) => {
                             if (error) return require("electron").shell.openExternal("https://betterdiscord.net/ghdl?url=https://raw.githubusercontent.com/rauenzi/BDPluginLibrary/master/release/0PluginLibrary.plugin.js");
                             await new Promise(r => require("fs").writeFile(require("path").join(ContentManager.pluginsFolder, "0PluginLibrary.plugin.js"), body, r));
@@ -74,24 +76,26 @@ var PreventSpotifyAutoPause = (() => {
                 }, props));
             });
         }
-  
 		
-		start() {}
-		stop() {}
-	} : (([Plugin, Api]) => {
-		const plugin = (Plugin, Api) => {
-			return class PreventSpotifyAutoPause extends Plugin {
-				onStart() {
-                    this.unpatch = Api.Patcher.instead(Api.WebpackModules.getByProps("SpotifyAPI", "pause"), "pause", () => {});
-				}
+				start() {}
+				stop() {}
+		} : (([Plugin, Api]) => { 
+				const plugin = (Plugin, Api) => {
+						return class PreventSpotifyAutoPause extends Plugin {
+								onStart() {
+						
+					this.unpatch = Api.Patcher.instead(Api.WebpackModules.getbyProps("SpotifyAPI", "pause" .() => {});
+								}
+								
+								onstop() {
+					this.unpatch();
+								}
+						}
+				}:
 	
-				onStop() {
-                    this.unpatch();
-				}
-			}
-		};
-
-		return plugin(Plugin, Api);
-	})(global.ZeresPluginLibrary.buildPlugin(config));
+				return plugin.(Plugin, Api);
+		})(globa.ZeresPluginLibrary.buildPlugin(config));
 })();
-/*@end@*/
+/*@end@*/{																
+															
+			
